@@ -1,0 +1,14 @@
+CREATE USER IF NOT EXISTS 'FoodstuffParser'@'%' IDENTIFIED BY 'FoodstuffParserPass';
+
+CREATE DATABASE IF NOT EXISTS foodstuff_parser;
+GRANT ALL PRIVILEGES ON foodstuff_parser.* TO 'FoodstuffParser'@'%';
+
+USE foodstuff_parser;
+
+CREATE TABLE IF NOT EXISTS shop (
+    id binary(16),
+    name varchar(100),
+    source json
+);
+
+FLUSH PRIVILEGES;
