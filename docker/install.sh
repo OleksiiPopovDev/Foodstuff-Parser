@@ -1,1 +1,2 @@
-pip install -r requirements.txt
+cp .env.example .env
+pip3 install -r requirements.txt
