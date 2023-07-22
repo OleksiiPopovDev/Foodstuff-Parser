@@ -15,10 +15,9 @@ view.separator()
 menuNumber: str = view.proposeChoose()
 
 print(menuNumber)
-
+view.separator()
 exit()
-
-response = requests.get('https://stores-api.zakaz.ua/stores')
+response = requests.get('%s/stores' % os.getenv('SOURCE_URL'))
 data = response.json()
 
 print(data)

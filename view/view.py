@@ -1,4 +1,5 @@
 import os
+from typing import List
 
 
 class View:
@@ -8,6 +9,12 @@ class View:
     COLOR_CYAN: str = '\033[0;36m'
     COLOR_RED: str = '\033[0;31m'
     COLOR_L_GREEN: str = '\033[1;32m'
+
+    __menu_items: list[str] = [
+        'Run parser from start',
+        'Run parser from last stopped point',
+        'Refresh database'
+    ]
 
     def showBanner(self):
         print(
@@ -21,9 +28,11 @@ class View:
         print("\t\t%sE-mail:\t%s%s" % (self.COLOR_PURPLE, self.COLOR_DEFAULT, os.getenv('AUTHOR_EMAIL')))
 
     def showMenu(self):
-        print("\n\t\t%s[%s1%s]\t%sRun parser from start" % (self.COLOR_RED, self.COLOR_YELLOW, self.COLOR_RED, self.COLOR_CYAN))
-        print("\t\t%s[%s2%s]\t%sRun parser from last stopped point" % (self.COLOR_RED, self.COLOR_YELLOW, self.COLOR_RED, self.COLOR_CYAN))
-        print("\t\t%s[%s3%s]\t%sRefresh database" % (self.COLOR_RED, self.COLOR_YELLOW, self.COLOR_RED, self.COLOR_CYAN))
+        print(self.COLOR_DEFAULT)
+        count: int = 1
+        for item in self.__menu_items:
+            print("\t\t%s[%s%d%s]\t%s%s" % (self.COLOR_RED, self.COLOR_YELLOW, count, self.COLOR_RED, self.COLOR_CYAN, item))
+            count += 1
         print(self.COLOR_DEFAULT)
 
     def proposeChoose(self) -> str:
