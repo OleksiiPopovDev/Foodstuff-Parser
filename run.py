@@ -6,15 +6,13 @@ from view.view import View
 
 load_dotenv()
 
-view = View()
-view.separator()
-view.showBanner()
-view.separator()
-view.showMenu()
-view.separator()
-menuNumber: str = view.proposeChoose()
+view = View([
+    'Run parser from start',
+    'Run parser from last stopped point',
+    'Refresh database'
+])
 
-print(menuNumber)
+print(view.selectedMenu)
 view.separator()
 exit()
 response = requests.get('%s/stores' % os.getenv('SOURCE_URL'))

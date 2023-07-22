@@ -10,11 +10,18 @@ class View:
     COLOR_RED: str = '\033[0;31m'
     COLOR_L_GREEN: str = '\033[1;32m'
 
-    __menu_items: list[str] = [
-        'Run parser from start',
-        'Run parser from last stopped point',
-        'Refresh database'
-    ]
+    __menu_items: list[str]
+
+    selectedMenu: int = 0
+
+    def __init__(self, menu: list[str]):
+        self.__menu_items = menu
+        self.separator()
+        self.showBanner()
+        self.separator()
+        self.showMenu()
+        self.separator()
+        self.proposeChoose()
 
     def showBanner(self):
         print(
@@ -36,7 +43,7 @@ class View:
         print(self.COLOR_DEFAULT)
 
     def proposeChoose(self) -> str:
-        return input("\t\t%sChoose menu number: " % self.COLOR_L_GREEN)
+        self.selectedMenu = int(input("\t\t%sChoose menu number: " % self.COLOR_L_GREEN))
 
     def separator(self):
         print("%s-" % self.COLOR_DEFAULT * 100)
