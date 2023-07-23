@@ -1,5 +1,4 @@
 import os
-from typing import List
 
 
 class View:
@@ -12,18 +11,18 @@ class View:
 
     __menu_items: list[str]
 
-    selectedMenu: int = 0
+    selected_menu: int = 0
 
     def __init__(self, menu: list[str]):
         self.__menu_items = menu
         self.separator()
-        self.showBanner()
+        self.show_banner()
         self.separator()
-        self.showMenu()
+        self.show_menu()
         self.separator()
-        self.proposeChoose()
+        self.propose_choose()
 
-    def showBanner(self):
+    def show_banner(self):
         print(
             "\n\t _______                 __ ______\n" +
             "\t|    ___|.-----.-----.--|  |   __ \\.---.-.----.-----.-----.----.\t%sv%s%s\n" %
@@ -34,16 +33,17 @@ class View:
         print("\t\t%sAuthor:\t%s%s" % (self.COLOR_PURPLE, self.COLOR_DEFAULT, os.getenv('AUTHOR_NAME')))
         print("\t\t%sE-mail:\t%s%s" % (self.COLOR_PURPLE, self.COLOR_DEFAULT, os.getenv('AUTHOR_EMAIL')))
 
-    def showMenu(self):
+    def show_menu(self):
         print(self.COLOR_DEFAULT)
         count: int = 1
         for item in self.__menu_items:
-            print("\t\t%s[%s%d%s]\t%s%s" % (self.COLOR_RED, self.COLOR_YELLOW, count, self.COLOR_RED, self.COLOR_CYAN, item))
+            print("\t\t%s[%s%d%s]\t%s%s" % (
+                self.COLOR_RED, self.COLOR_YELLOW, count, self.COLOR_RED, self.COLOR_CYAN, item))
             count += 1
         print(self.COLOR_DEFAULT)
 
-    def proposeChoose(self) -> str:
-        self.selectedMenu = int(input("\t\t%sChoose menu number: " % self.COLOR_L_GREEN))
+    def propose_choose(self):
+        self.selected_menu = int(input("\t\t%sChoose menu number: " % self.COLOR_L_GREEN))
 
     def separator(self):
         print("%s-" % self.COLOR_DEFAULT * 100)

@@ -12,7 +12,7 @@ view = View([
     'Refresh database'
 ])
 
-print(view.selectedMenu)
+print(view.selected_menu)
 view.separator()
 exit()
 response = requests.get('%s/stores' % os.getenv('SOURCE_URL'))
