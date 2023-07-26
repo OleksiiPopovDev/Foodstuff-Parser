@@ -1,21 +1,27 @@
-import requests
-import os
 from dotenv import load_dotenv
 import sys
 from view.view import View
+from database.migration import Migration
+from service.store_parser import StoreParser
 
 load_dotenv()
 
 view = View([
-    'Run parser from start',
+    'Exit',
+    'Run Migration',
     'Run parser from last stopped point',
-    'Refresh database'
 ])
 
-print(view.selected_menu)
-view.separator()
-exit()
-response = requests.get('%s/stores' % os.getenv('SOURCE_URL'))
-data = response.json()
+while view.selected_menu != 0:
+    view.separator()
 
-print(data)
+    if view.selected_menu == 1:
+        migration = Migration()
+        migration.run()
+        view.separator()
+        view.show_menu()
+    elif view.selected_menu == 2:
+        store = StoreParser()
+        store.run()
+        view.separator()
+        view.show_menu()

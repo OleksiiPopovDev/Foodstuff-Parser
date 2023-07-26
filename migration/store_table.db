@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS `store`
+(
+    id     INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
+    name   TEXT,
+    source TEXT
+)
