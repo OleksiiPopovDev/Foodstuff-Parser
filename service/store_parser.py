@@ -1,34 +1,23 @@
 import sqlite3
 import time
-import requests
 import json
 import os
 from dto.store_dto import StoreDto
 from alive_progress import alive_bar
 from view.view import View
 from repository.store_repository import StoreRepository
+from service.base_parser import BaseParser
 
 
-class StoreParser:
-    _url: str = ''
-    _repository: StoreRepository = None
-
+class StoreParser(BaseParser):
     def __init__(self):
         self._url = '%s/stores' % os.getenv('SOURCE_URL')
         self._repository = StoreRepository()
 
     def run(self) -> None:
-        store_list = self._send_request()
-        stores_dto = self._prepare_response(store_list)
-        self._save_stores(stores_dto)
-
-    def _send_request(self) -> list:
-        response = requests.get(self._url)
-        store_list = response.json()
-        if not isinstance(store_list, list):
-            raise RuntimeError('The endpoint of Stores returned incorrect data format!')
-
-        return store_list
+        store_list = self.send_request(self._url)
+        stores = self._prepare_response(store_list)
+        self._save_stores(stores)
 
     @staticmethod
     def _prepare_response(resp_store_list: list) -> list[StoreDto]:

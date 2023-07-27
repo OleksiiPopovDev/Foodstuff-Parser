@@ -5,12 +5,15 @@ import time
 
 
 class Migration(Connector):
-    _tables: list[str] = ['store', 'category', 'product']
+    _tables: list[str] = ['store', 'category', 'product', 'statistic']
 
     def run(self):
         for table_name in alive_it(self._tables):
             print('Create table -> %s%s%s' % (View.COLOR_L_GREEN, table_name, View.COLOR_DEFAULT))
-            file = open('./migration/%s_table.db' % table_name, 'r')
-            query: str = file.read()
-            super().get_cursor().execute(query)
+
+            with open('./migration/%s_table.db' % table_name, 'r') as file:
+                query: str = file.read()
+                super().get_cursor().execute(query)
+                super().commit()
+
             time.sleep(0.3)

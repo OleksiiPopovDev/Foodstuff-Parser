@@ -1,6 +1,8 @@
 CREATE TABLE IF NOT EXISTS `category`
 (
-    id     INTEGER PRIMARY KEY AUTOINCREMENT,
-    name   TEXT,
-    source TEXT
+    id            TEXT    NOT NULL,
+    store_id      INTEGER NOT NULL,
+    product_count INTEGER,
+    source        TEXT,
+    UNIQUE (id, store_id)
 )
