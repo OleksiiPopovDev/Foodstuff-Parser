@@ -26,7 +26,7 @@ class StoreParser(BaseParser):
         print('\t%sFound stores: %s%d%s' % (View.COLOR_YELLOW, View.COLOR_RED, count, View.COLOR_DEFAULT))
 
         with alive_bar(count) as bar:
-            print('\t%sParsing...%s' % (View.COLOR_YELLOW, View.COLOR_DEFAULT))
+            bar.title('\t%sParsing...%s' % (View.COLOR_YELLOW, View.COLOR_DEFAULT))
             for store in resp_store_list:
                 stores.append(StoreDto(
                     id=int(store['id']),
@@ -40,7 +40,7 @@ class StoreParser(BaseParser):
 
     def _save_stores(self, store_list: list[StoreDto]) -> None:
         with alive_bar(len(store_list)) as bar:
-            print('\t%sSaving...%s' % (View.COLOR_YELLOW, View.COLOR_DEFAULT))
+            bar.title('\t%sSaving... %s' % (View.COLOR_YELLOW, View.COLOR_DEFAULT))
             for store in store_list:
                 try:
                     self._repository.save(store)

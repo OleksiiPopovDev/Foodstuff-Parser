@@ -22,8 +22,9 @@ while view.selected_menu != 0:
         view.separator()
         view.show_menu()
     elif view.selected_menu == 2:
-        #store = StoreParser()
-        #store.run()
+        store = StoreParser()
+        store.run()
+        view.separator()
         category = CategoryParser()
         category.run()
         view.separator()
