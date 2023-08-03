@@ -1,10 +1,12 @@
 CREATE TABLE IF NOT EXISTS `product`
 (
-    ean           TEXT NOT NULL,
+    ean           TEXT    NOT NULL,
+    store_id      INTEGER NOT NULL,
     energy        TEXT,
     protein       TEXT,
     fat           TEXT,
     carbohydrates TEXT,
     source        TEXT,
-    UNIQUE (ean)
+    detail_source TEXT,
+    UNIQUE (ean, store_id)
 )
