@@ -1,7 +1,8 @@
 CREATE TABLE IF NOT EXISTS `statistic`
 (
-    store_id         INTEGER NOT NULL UNIQUE,
-    status           TEXT    NOT NULL,
-    last_category_id TEXT,
-    last_product_ean TEXT
+    store_id           INTEGER NOT NULL UNIQUE,
+    status             TEXT    NOT NULL,
+    last_category_id   TEXT,
+    last_product_ean   TEXT,
+    num_paginator_page INTEGER
 )

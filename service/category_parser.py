@@ -13,6 +13,7 @@ from view.view import View
 
 class CategoryParser(BaseParser):
     _biggest_name: int = 0
+
     def __init__(self):
         self._store_repository = StoreRepository()
         self._category_repository = CategoryRepository()
@@ -21,40 +22,25 @@ class CategoryParser(BaseParser):
         stores = self._store_repository.list()
 
         for store in stores:
-            name_length = len(store.name)
-            self._biggest_name = name_length if name_length > self._biggest_name else self._biggest_name
-
-        for store in stores:
             url = '%s/stores/%s/categories' % (os.getenv('SOURCE_URL'), store.id)
             category_list = self.send_request(url)
             categories = self._prepare_response(category_list, store)
             self._save_categories(store, categories)
+            time.sleep(1)
 
     def _save_categories(self, store: StoreDto, categories: list[CategoryDto]) -> None:
         categories_count: int = len(categories)
         with alive_bar(categories_count) as bar:
-            more_spaces: int = self._biggest_name - len(store.name)
-            bar.title('[%s%s%s] %sFound categories: %s%d%s ' % (
-                View.COLOR_CYAN,
-                store.name,
-                View.COLOR_DEFAULT,
-                View.COLOR_YELLOW,
-                View.COLOR_RED,
-                categories_count,
-                View.COLOR_DEFAULT
-            ) + " " * more_spaces)
+            more_spaces: int = 30 - len(store.name)
+            txt: str = View.paint('[{Cyan}%s{ColorOff}] %s{Yellow}Found categories: {Red}%d{ColorOff} ')
+            bar.title(txt % (store.name, ' ' * more_spaces, categories_count))
 
             for category in categories:
                 try:
                     self._category_repository.save(category)
                 except (sqlite3.OperationalError, sqlite3.IntegrityError) as message:
-                    print('%s%s %s Error: %s%s' % (
-                        View.COLOR_BLUE,
-                        category.id,
-                        View.COLOR_RED,
-                        message,
-                        View.COLOR_DEFAULT
-                    ))
+                    txt: str = View.paint('{Blue}%s {Red} Error: %s{ColorOff}')
+                    print(txt % (category.id, message))
                 bar()
 
     @staticmethod

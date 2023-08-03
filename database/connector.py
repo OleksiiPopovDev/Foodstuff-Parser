@@ -1,4 +1,5 @@
 import sqlite3
+import os
 
 
 class Connector:
@@ -6,7 +7,10 @@ class Connector:
 
     def __init__(self):
         if not isinstance(self._connect, sqlite3.Connection):
-            self._connect = sqlite3.connect('test.db')
+            self.create_connection()
+
+    def create_connection(self):
+        self._connect = sqlite3.connect('database/%s.db' % os.getenv('DB_FILE_NAME'))
 
     def get_cursor(self) -> sqlite3.Cursor:
         return self._connect.cursor()

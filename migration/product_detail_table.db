@@ -1,0 +1,9 @@
+CREATE TABLE IF NOT EXISTS `product_detail`
+(
+    ean         TEXT NOT NULL,
+    language    TEXT,
+    title       TEXT,
+    description TEXT,
+    source      TEXT,
+    UNIQUE (ean, language)
+)

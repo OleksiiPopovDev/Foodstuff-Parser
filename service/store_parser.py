@@ -23,37 +23,30 @@ class StoreParser(BaseParser):
     def _prepare_response(resp_store_list: list) -> list[StoreDto]:
         stores: list[StoreDto] = []
         count: int = len(resp_store_list)
-        print('\t%sFound stores: %s%d%s' % (View.COLOR_YELLOW, View.COLOR_RED, count, View.COLOR_DEFAULT))
+        print(View.paint('\t{Yellow}Found stores: {Red}%d{ColorOff}' % count))
 
         with alive_bar(count) as bar:
-            bar.title('\t%sParsing...%s' % (View.COLOR_YELLOW, View.COLOR_DEFAULT))
+            bar.title(View.paint('\t\t{Yellow}Parsing...{ColorOff}'))
             for store in resp_store_list:
                 stores.append(StoreDto(
                     id=int(store['id']),
                     name=str(store['name']),
                     source=json.dumps(store)
                 ))
-                time.sleep(0.01)
+
                 bar()
+                time.sleep(0.01)
 
         return stores
 
     def _save_stores(self, store_list: list[StoreDto]) -> None:
         with alive_bar(len(store_list)) as bar:
-            bar.title('\t%sSaving... %s' % (View.COLOR_YELLOW, View.COLOR_DEFAULT))
+            bar.title(View.paint('\t\t{Yellow}Saving... {ColorOff}'))
             for store in store_list:
                 try:
                     self._repository.save(store)
                 except (sqlite3.OperationalError, sqlite3.IntegrityError) as message:
-                    print('\t%s%s (%s%d%s)%s Error: %s%s' % (
-                        View.COLOR_BLUE,
-                        store.name,
-                        View.COLOR_L_BLUE,
-                        store.id,
-                        View.COLOR_BLUE,
-                        View.COLOR_RED,
-                        message,
-                        View.COLOR_DEFAULT
-                    ))
-                time.sleep(0.01)
+                    print('\t{Blue}%s ({BBlue}%d{Blue}){Red} Error: %s{ColorOff}' % (store.name, store.id, message))
+
                 bar()
+                time.sleep(0.01)

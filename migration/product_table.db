@@ -1,6 +1,10 @@
 CREATE TABLE IF NOT EXISTS `product`
 (
-    id     INTEGER PRIMARY KEY AUTOINCREMENT,
-    name   TEXT,
-    source TEXT
+    ean           TEXT NOT NULL,
+    energy        TEXT,
+    protein       TEXT,
+    fat           TEXT,
+    carbohydrates TEXT,
+    source        TEXT,
+    UNIQUE (ean)
 )

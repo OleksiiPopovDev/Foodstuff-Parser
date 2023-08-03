@@ -1,4 +1,5 @@
 import os
+from view.color import Color
 
 
 class View:
@@ -25,20 +26,21 @@ class View:
     def show_banner(self) -> None:
         print(
             "\n\t _______                 __ ______\n" +
-            "\t|    ___|.-----.-----.--|  |   __ \\.---.-.----.-----.-----.----.\t%sv%s%s\n" %
-            (self.COLOR_YELLOW, os.getenv('VERSION'), self.COLOR_DEFAULT) +
+            self.paint(
+                "\t|    ___|.-----.-----.--|  |   __ \\.---.-.----.-----.-----.----. {Yellow}v%s{ColorOff}\n"
+                % os.getenv('VERSION')
+            ) +
             "\t|    ___||  _  |  _  |  _  |    __/|  _  |   _|__ --|  -__|   _|\n" +
             "\t|___|    |_____|_____|_____|___|   |___._|__| |_____|_____|__|\n"
         )
-        print("\t\t%sAuthor:\t%s%s" % (self.COLOR_PURPLE, self.COLOR_DEFAULT, os.getenv('AUTHOR_NAME')))
-        print("\t\t%sE-mail:\t%s%s" % (self.COLOR_PURPLE, self.COLOR_DEFAULT, os.getenv('AUTHOR_EMAIL')))
+        print(self.paint("\t\t{Purple}Author:\t{ColorOff}%s" % os.getenv('AUTHOR_NAME')))
+        print(self.paint("\t\t{Purple}E-mail:\t{ColorOff}%s" % os.getenv('AUTHOR_EMAIL')))
 
     def show_menu(self) -> None:
         print(self.COLOR_DEFAULT)
         count: int = 0
         for item in self.__menu_items:
-            print("\t\t%s[%s%d%s]\t%s%s" % (
-                self.COLOR_RED, self.COLOR_YELLOW, count, self.COLOR_RED, self.COLOR_CYAN, item))
+            print(self.paint("\t\t{Red}[{Yellow}%d{Red}]\t{Cyan}%s" % (count, item)))
             count += 1
         print(self.COLOR_DEFAULT)
         self.separator()
@@ -46,9 +48,34 @@ class View:
 
     def propose_choose(self) -> None:
         try:
-            self.selected_menu = int(input("\t\t%sChoose menu number: " % self.COLOR_L_GREEN))
+            self.selected_menu = int(input(self.paint("\t\t{Green}Choose menu number {BGreen}>> ")))
         except (ValueError, KeyboardInterrupt):
             self.selected_menu = 0
 
     def separator(self) -> None:
         print("%s-" % self.COLOR_DEFAULT * 100)
+
+    @staticmethod
+    def paint(string: str) -> str:
+        for color in Color:
+            string = string.replace("{%s}" % color.name, color.value)
+
+        return string
+
+    @staticmethod
+    def count_biggest_line(list_items: list) -> int:
+        biggest_line_length: int = 0
+        for item in list_items:
+            name_length = len(item)
+            biggest_line_length = name_length if name_length > biggest_line_length else biggest_line_length
+
+        return biggest_line_length
+
+    @staticmethod
+    def add_spaces_for_line_up(line: str, count_biggest_line: int) -> str:
+        more_spaces: int = count_biggest_line - len(line)
+        return line + ' ' * more_spaces
+
+    @staticmethod
+    def get_count_spaces_for_line_up(line: str, count_biggest_line: int) -> int:
+        return count_biggest_line - len(line)
