@@ -18,9 +18,7 @@ class View:
 
     def __init__(self, menu: list[str]) -> None:
         self.__menu_items = menu
-        self.separator()
         self.show_banner()
-        self.separator()
         self.show_menu()
 
     def show_banner(self) -> None:
@@ -43,7 +41,6 @@ class View:
             print(self.paint("\t\t{Red}[{Yellow}%d{Red}]\t{Cyan}%s" % (count, item)))
             count += 1
         print(self.COLOR_DEFAULT)
-        self.separator()
         self.propose_choose()
 
     def propose_choose(self) -> None:

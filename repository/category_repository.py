@@ -1,5 +1,6 @@
 from database.connector import Connector
 from dto.category_dto import CategoryDto
+from repository.statistic_status import StatisticStatus
 
 
 class CategoryRepository(Connector):
@@ -12,7 +13,14 @@ class CategoryRepository(Connector):
 
     def list(self) -> list[CategoryDto]:
         cursor = self.get_cursor()
-        cursor.execute("SELECT * FROM category")
+        cursor.execute(
+            """SELECT * FROM category c
+            LEFT JOIN statistic s ON c.id = s.category_id AND c.store_id = s.store_id
+            WHERE s.status = ? OR s.status IS NULL
+            ORDER BY s.status DESC""",
+            (StatisticStatus.IN_PROGRESS.value,)
+        )
+        # cursor.execute("SELECT * FROM category")
         data = cursor.fetchall()
 
         categories: list[CategoryDto] = []
