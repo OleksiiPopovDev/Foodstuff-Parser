@@ -39,11 +39,12 @@ class View:
 
     def show_menu(self) -> None:
         print(self.COLOR_DEFAULT)
-        count: int = 0
+        count: int = 1
         for item in self.__menu_items:
-            print(self.paint("\t\t{Red}[{Yellow}%d{Red}]\t{Cyan}%s" % (count, item)))
+            print(self.paint("\t\t{Red}[{Yellow}%d{Red}]\t{Cyan} %s" % (count, item)))
             count += 1
-        print(self.COLOR_DEFAULT)
+
+        print(self.paint("\t\t\t {Purple}For {UPurple}Exit{Purple} press {On_Purple}Ctrl+C{ColorOff}\n"))
         self.propose_choose()
 
     def propose_choose(self) -> None:

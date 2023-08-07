@@ -8,8 +8,8 @@ from service.product_parser import ProductParser
 load_dotenv()
 
 view = View([
-    'Exit',
     'Run parser from scratch (Refresh Database)',
+    'Base Parsing',
     'Continue Parsing',
 ])
 
@@ -21,15 +21,17 @@ while view.selected_menu != 0:
         migration.run()
         view.separator()
         view.show_menu()
+
     elif view.selected_menu == 2:
-        # store = StoreParser()
-        # store.run()
-        # view.separator()
+        store = StoreParser()
+        store.run()
+        view.separator()
 
-        # category = CategoryParser()
-        # category.run()
-        # view.separator()
+        category = CategoryParser()
+        category.run()
+        view.separator()
 
+    elif view.selected_menu == 3:
         product = ProductParser()
         product.run()
         view.separator()
