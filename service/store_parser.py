@@ -46,7 +46,7 @@ class StoreParser(BaseParser):
                 try:
                     self._repository.save(store)
                 except (sqlite3.OperationalError, sqlite3.IntegrityError) as message:
-                    print('\t{Blue}%s ({BBlue}%d{Blue}){Red} Error: %s{ColorOff}' % (store.name, store.id, message))
+                    print(View.paint('\t{Blue}%s ({BBlue}%d{Blue}){Red} Error: %s{ColorOff}') % (store.name, store.id, message))
 
                 bar()
                 time.sleep(0.01)
