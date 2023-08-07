@@ -1,5 +1,4 @@
 from dotenv import load_dotenv
-import sys
 from view.view import View
 from database.migration import Migration
 from service.store_parser import StoreParser
@@ -10,8 +9,8 @@ load_dotenv()
 
 view = View([
     'Exit',
-    'Run Migration',
-    'Run parser from last stopped point',
+    'Run parser from scratch (Refresh Database)',
+    'Continue Parsing',
 ])
 
 while view.selected_menu != 0:
@@ -23,13 +22,13 @@ while view.selected_menu != 0:
         view.separator()
         view.show_menu()
     elif view.selected_menu == 2:
-        #store = StoreParser()
-        #store.run()
-        #view.separator()
+        # store = StoreParser()
+        # store.run()
+        # view.separator()
 
-        #category = CategoryParser()
-        #category.run()
-        #view.separator()
+        # category = CategoryParser()
+        # category.run()
+        # view.separator()
 
         product = ProductParser()
         product.run()

@@ -24,11 +24,11 @@ class CategoryParser(BaseParser):
         for store in stores:
             url = '%s/stores/%s/categories' % (os.getenv('SOURCE_URL'), store.id)
             category_list = self.send_request(url)
-            categories = self._prepare_response(category_list, store)
-            self._save_categories(store, categories)
+            categories = self.__prepare_response(category_list, store)
+            self.__save_categories(store, categories)
             time.sleep(1)
 
-    def _save_categories(self, store: StoreDto, categories: list[CategoryDto]) -> None:
+    def __save_categories(self, store: StoreDto, categories: list[CategoryDto]) -> None:
         categories_count: int = len(categories)
         with alive_bar(categories_count) as bar:
             more_spaces: int = 30 - len(store.name)
@@ -44,7 +44,7 @@ class CategoryParser(BaseParser):
                 bar()
 
     @staticmethod
-    def _prepare_response(resp_category_list: list, store: StoreDto) -> list[CategoryDto]:
+    def __prepare_response(resp_category_list: list, store: StoreDto) -> list[CategoryDto]:
         categories: list[CategoryDto] = []
         for category in resp_category_list:
             categories.append(CategoryDto(

@@ -26,6 +26,12 @@ class ProductParser(BaseParser):
 
     def run(self):
         categories = self._category_repository.list()
+        try:
+            statistic = self._statistic_repository.get_in_progress()
+            start_num_page: int = statistic.num_paginator_page
+
+        except RuntimeError:
+            start_num_page: int = 1
 
         mockup_str: str = View.paint('{Blue}[{BBlue}%d{Blue}] {Cyan}%s{ColorOff} ')
         category_name_list: list[str] = []
@@ -35,7 +41,7 @@ class ProductParser(BaseParser):
 
         for category in categories:
             with alive_bar(category.product_count) as bar:
-                page_num: int = 1
+                page_num: int = start_num_page
                 while True:
                     title: str = mockup_str % (category.store_id, category.id)
                     spaces: int = View.get_count_spaces_for_line_up(title, biggest_line)
@@ -68,10 +74,10 @@ class ProductParser(BaseParser):
                         product_dto: ProductDto = ProductDto(
                             product_ean,
                             category.store_id,
-                            self._check_nutrition_facts(product, self._NUTRITION_INGREDIENT_ENERGY),
-                            self._check_nutrition_facts(product, self._NUTRITION_INGREDIENT_PROTEIN),
-                            self._check_nutrition_facts(product, self._NUTRITION_INGREDIENT_FAT),
-                            self._check_nutrition_facts(product, self._NUTRITION_INGREDIENT_CARBOHYDRATES),
+                            self.__check_nutrition_facts(product, self._NUTRITION_INGREDIENT_ENERGY),
+                            self.__check_nutrition_facts(product, self._NUTRITION_INGREDIENT_PROTEIN),
+                            self.__check_nutrition_facts(product, self._NUTRITION_INGREDIENT_FAT),
+                            self.__check_nutrition_facts(product, self._NUTRITION_INGREDIENT_CARBOHYDRATES),
                             json.dumps(product)
                         )
                         statistic_dto: StatisticDto = StatisticDto(
@@ -100,7 +106,7 @@ class ProductParser(BaseParser):
                     time.sleep(0.5)
 
     @staticmethod
-    def _check_nutrition_facts(product: dict, item: str) -> str:
+    def __check_nutrition_facts(product: dict, item: str) -> str:
         try:
             return product['nutrition_facts'][item]
         except KeyError:

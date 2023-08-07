@@ -36,7 +36,6 @@ class Migration(Connector):
 
                 print(View.paint(
                     '\t\t{Yellow}Created table {ColorOff} >> {BGreen}%s{ColorOff}' % table_name
-                    #'\t\t{Blue}%s{ColorOff} %s>> {BGreen}Done{ColorOff}' % (table_name, (' ' * count_spaces))
                 ))
 
                 bar()

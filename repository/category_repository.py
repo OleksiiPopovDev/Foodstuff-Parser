@@ -20,7 +20,6 @@ class CategoryRepository(Connector):
             ORDER BY s.status DESC""",
             (StatisticStatus.IN_PROGRESS.value,)
         )
-        # cursor.execute("SELECT * FROM category")
         data = cursor.fetchall()
 
         categories: list[CategoryDto] = []

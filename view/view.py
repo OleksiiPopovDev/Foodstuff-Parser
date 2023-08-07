@@ -1,5 +1,7 @@
 import os
 from view.color import Color
+import signal
+import sys
 
 
 class View:
@@ -17,6 +19,7 @@ class View:
     selected_menu: int = 0
 
     def __init__(self, menu: list[str]) -> None:
+        signal.signal(signal.SIGINT, lambda s, f: sys.exit(0))
         self.__menu_items = menu
         self.show_banner()
         self.show_menu()

@@ -16,11 +16,11 @@ class StoreParser(BaseParser):
 
     def run(self) -> None:
         store_list = self.send_request(self._url)
-        stores = self._prepare_response(store_list)
-        self._save_stores(stores)
+        stores = self.__prepare_response(store_list)
+        self.__save_stores(stores)
 
     @staticmethod
-    def _prepare_response(resp_store_list: list) -> list[StoreDto]:
+    def __prepare_response(resp_store_list: list) -> list[StoreDto]:
         stores: list[StoreDto] = []
         count: int = len(resp_store_list)
         print(View.paint('\t{Yellow}Found stores: {Red}%d{ColorOff}' % count))
@@ -39,7 +39,7 @@ class StoreParser(BaseParser):
 
         return stores
 
-    def _save_stores(self, store_list: list[StoreDto]) -> None:
+    def __save_stores(self, store_list: list[StoreDto]) -> None:
         with alive_bar(len(store_list)) as bar:
             bar.title(View.paint('\t\t{Yellow}Saving... {ColorOff}'))
             for store in store_list:
