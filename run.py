@@ -20,6 +20,7 @@ while view.selected_menu != 0:
         migration = Migration()
         migration.run()
         view.separator()
+
         view.show_menu()
 
     elif view.selected_menu == 2:
@@ -31,8 +32,11 @@ while view.selected_menu != 0:
         category.run()
         view.separator()
 
+        view.show_menu()
+
     elif view.selected_menu == 3:
         product = ProductParser()
         product.run()
         view.separator()
+
         view.show_menu()

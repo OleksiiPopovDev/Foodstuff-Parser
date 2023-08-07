@@ -28,9 +28,9 @@ class StatisticRepository(Connector):
             raise RuntimeError('Statistic is empty! Parse all')
 
         return StatisticDto(
-            store_id=int(data['store_id']),
-            category_id=str(data['category_id']),
-            last_product_ean=str(data['last_product_ean']),
-            num_paginator_page=int(data['num_paginator_page']),
+            store_id=int(data[0]),
+            category_id=str(data[1]),
+            last_product_ean=str(data[2]),
+            num_paginator_page=int(data[3]),
             status=StatisticStatus.IN_PROGRESS.value
         )
