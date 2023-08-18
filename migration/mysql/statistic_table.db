@@ -1,0 +1,9 @@
+CREATE TABLE IF NOT EXISTS `statistic`
+(
+    store_id           INTEGER NOT NULL,
+    category_id        VARCHAR(400)    NOT NULL,
+    last_product_ean   VARCHAR(400)    NOT NULL,
+    num_paginator_page INTEGER NOT NULL,
+    status             ENUM('in progress', 'done')    NOT NULL,
+    UNIQUE (store_id, category_id)
+)

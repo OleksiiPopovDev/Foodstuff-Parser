@@ -1,4 +1,5 @@
 import sqlite3
+import mysql.connector
 import time
 import json
 import os
@@ -45,7 +46,7 @@ class StoreParser(BaseParser):
             for store in store_list:
                 try:
                     self._repository.save(store)
-                except (sqlite3.OperationalError, sqlite3.IntegrityError) as message:
+                except (sqlite3.OperationalError, sqlite3.IntegrityError, mysql.connector.errors.IntegrityError) as message:
                     print(View.paint('\t{Blue}%s ({BBlue}%d{Blue}){Red} Error: %s{ColorOff}') % (store.name, store.id, message))
 
                 bar()

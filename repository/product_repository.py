@@ -7,7 +7,7 @@ from repository.statistic_status import StatisticStatus
 class ProductRepository(Connector):
     def save(self, product_dto: ProductDto, statistic_dto: StatisticDto) -> None:
         self.get_cursor().execute(
-            "INSERT INTO product (ean, store_id, energy, protein, fat, carbohydrates, source) VALUES (?, ?, ?, ?, ?, ?, ?)",
+            "INSERT INTO product (ean, store_id, energy, protein, fat, carbohydrates, source) VALUES (%s, %s, %s, %s, %s, %s, %s)",
             (
                 product_dto.ean,
                 product_dto.store_id,
@@ -19,7 +19,7 @@ class ProductRepository(Connector):
             )
         )
         self.get_cursor().execute(
-            "INSERT OR REPLACE INTO statistic (store_id, category_id, last_product_ean, num_paginator_page, status) VALUES (?, ?, ?, ?, ?)",
+            "REPLACE INTO statistic (store_id, category_id, last_product_ean, num_paginator_page, status) VALUES (%s, %s, %s, %s, %s)",
             (
                 statistic_dto.store_id,
                 statistic_dto.category_id,

@@ -44,7 +44,7 @@ class View:
             print(self.paint("\t\t{Red}[{Yellow}%d{Red}]\t{Cyan} %s" % (count, item)))
             count += 1
 
-        print(self.paint("\t\t\t {Purple}For {UPurple}Exit{Purple} press {On_Purple}Ctrl+C{ColorOff}\n"))
+        print(self.paint("\t\t\t {Purple}For {UPurple}Exit{Purple} press {BPurple}Ctrl+C{ColorOff}\n"))
         self.propose_choose()
 
     def propose_choose(self) -> None:

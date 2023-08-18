@@ -6,7 +6,7 @@ from repository.statistic_status import StatisticStatus
 class StatisticRepository(Connector):
     def set_status(self, statistic_dto: StatisticDto):
         self.get_cursor().execute(
-            "UPDATE statistic SET status = ? WHERE store_id = ? AND category_id = ?",
+            "UPDATE statistic SET status = %s WHERE store_id = %s AND category_id = %s",
             (
                 statistic_dto.status,
                 statistic_dto.store_id,
@@ -18,7 +18,7 @@ class StatisticRepository(Connector):
     def get_in_progress(self) -> StatisticDto:
         cursor = self.get_cursor()
         cursor.execute(
-            "SELECT * FROM statistic WHERE status = ? LIMIT 1",
+            "SELECT * FROM statistic WHERE status = %s LIMIT 1",
             (StatisticStatus.IN_PROGRESS.value,)
         )
 
