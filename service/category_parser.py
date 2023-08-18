@@ -1,4 +1,5 @@
 import sqlite3
+import mysql.connector
 import time
 import json
 import os
@@ -38,7 +39,7 @@ class CategoryParser(BaseParser):
             for category in categories:
                 try:
                     self._category_repository.save(category)
-                except (sqlite3.OperationalError, sqlite3.IntegrityError) as message:
+                except (sqlite3.OperationalError, sqlite3.IntegrityError, mysql.connector.errors.IntegrityError) as message:
                     txt: str = View.paint('{Blue}%s {Red} Error: %s{ColorOff}')
                     print(txt % (category.id, message))
                 bar()

@@ -11,6 +11,7 @@ import json
 import os
 import time
 import sqlite3
+import mysql.connector
 
 
 class ProductParser(BaseParser):
@@ -89,7 +90,7 @@ class ProductParser(BaseParser):
                         )
                         try:
                             self._product_repository.save(product_dto, statistic_dto)
-                        except (sqlite3.OperationalError, sqlite3.IntegrityError) as message:
+                        except (sqlite3.OperationalError, sqlite3.IntegrityError, mysql.connector.errors.IntegrityError) as message:
                             print(
                                 View.paint(
                                     '\t{Blue}%d ({BBlue}%s{Blue}){Red} Error: %s {Yellow}[{Purple}ean=%s, store_id=%s{Yellow}]{ColorOff}') % (
