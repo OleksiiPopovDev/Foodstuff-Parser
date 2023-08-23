@@ -91,8 +91,7 @@ class ProductParser(BaseParser):
                         try:
                             self._product_repository.save(product_dto, statistic_dto)
                         except (sqlite3.OperationalError, sqlite3.IntegrityError, mysql.connector.errors.IntegrityError) as message:
-                            print(
-                                View.paint(
+                            message_error: str = View.paint(
                                     '\t{Blue}%d ({BBlue}%s{Blue}){Red} Error: %s {Yellow}[{Purple}ean=%s, store_id=%s{Yellow}]{ColorOff}') % (
                                     category.store_id,
                                     category.id,
@@ -100,7 +99,7 @@ class ProductParser(BaseParser):
                                     product['ean'],
                                     category.store_id
                                 )
-                            )
+                            #print(message_error)
                         time.sleep(0.01)
                         bar()
                     page_num += 1
