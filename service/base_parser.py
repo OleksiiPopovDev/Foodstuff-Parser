@@ -21,7 +21,7 @@ class BaseParser:
             wait_seconds: int = 60
             print(
                 View.paint(
-                    '\t{Blue}({BBlue}Requester{Blue}){Red} Error: %s {Yellow}[{Purple}Waiting %d secends{Yellow}]{ColorOff}'
+                    '\t{Blue}({BBlue}Requester{Blue}){Yellow} Error: %s {White}[{BWhite}Waiting %d secends{White}]{ColorOff}'
                 ) % (message, wait_seconds)
             )
             time.sleep(wait_seconds)
