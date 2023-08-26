@@ -57,7 +57,7 @@ class ProductParser(BaseParser):
                     if len(product_list) == 0:
                         statistic_dto: StatisticDto = StatisticDto(
                             store_id=category.store_id,
-                            category_id=category.page,
+                            category_id=category.id,
                             status=StatisticStatus.DONE.value
                         )
                         self._statistic_repository.set_status(statistic_dto)
@@ -90,7 +90,7 @@ class ProductParser(BaseParser):
         )
         statistic_dto: StatisticDto = StatisticDto(
             category.store_id,
-            category.page,
+            category.id,
             product_ean,
             page_num,
             StatisticStatus.IN_PROGRESS.value

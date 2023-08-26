@@ -5,7 +5,7 @@ class StatisticDto:
     def __init__(
             self,
             store_id: int,
-            category_id: str,
+            category_id: int,
             last_product_ean: str = None,
             num_paginator_page: int = None,
             status: str = StatisticStatus.IN_PROGRESS.value

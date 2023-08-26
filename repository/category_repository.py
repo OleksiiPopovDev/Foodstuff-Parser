@@ -34,6 +34,7 @@ class CategoryRepository(Connector):
         categories: list[CategoryDto] = []
         for category in data:
             categories.append(CategoryDto(
+                id=category.id,
                 page=str(category.page),
                 store_id=category.store.id,
                 product_count=int(category.product_count),

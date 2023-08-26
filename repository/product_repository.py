@@ -7,7 +7,8 @@ from database.model.statistic_model import Statistic
 
 
 class ProductRepository(Connector):
-    def save(self, product_dto: ProductDto, statistic_dto: StatisticDto) -> None:
+    @staticmethod
+    def save(product_dto: ProductDto, statistic_dto: StatisticDto) -> None:
         db = Connector.get_connection()
         with db.transaction() as transaction:
             Product.create(
@@ -26,5 +27,5 @@ class ProductRepository(Connector):
                 num_paginator_page=statistic_dto.num_paginator_page,
                 status=StatisticStatus.IN_PROGRESS.value
             ).execute()
-            
+
             transaction.commit()

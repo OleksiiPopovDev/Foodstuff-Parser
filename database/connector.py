@@ -10,7 +10,7 @@ class Connector():
         if os.getenv('DB_TYPE') == 'MySQL':
             return MySQLDatabase(
                 host=os.getenv('MYSQL_HOST'),
-                port=os.getenv('MYSQL_PORT'),
+                port=int(os.getenv('MYSQL_PORT')),
                 user=os.getenv('MYSQL_USER'),
                 password=os.getenv('MYSQL_PASS'),
                 database=os.getenv('DB_FILE_NAME')
