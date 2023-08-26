@@ -1,8 +1,7 @@
-import sqlite3
-import mysql.connector
 import time
 import json
 import os
+from peewee import IntegrityError
 from dto.store_dto import StoreDto
 from alive_progress import alive_bar
 from view.view import View
@@ -46,8 +45,11 @@ class StoreParser(BaseParser):
             for store in store_list:
                 try:
                     self._repository.save(store)
-                except (sqlite3.OperationalError, sqlite3.IntegrityError, mysql.connector.errors.IntegrityError) as message:
-                    print(View.paint('\t{Blue}%s ({BBlue}%d{Blue}){Red} Error: %s{ColorOff}') % (store.name, store.id, message))
+                except IntegrityError as message:
+                    print(
+                        View.paint('\t{Blue}%s ({BBlue}%d{Blue}){Red} Error: %s{ColorOff}') %
+                        (store.name, store.id, message)
+                    )
 
                 bar()
                 time.sleep(0.01)

@@ -1,9 +1,0 @@
-CREATE TABLE IF NOT EXISTS `statistic`
-(
-    store_id           INTEGER NOT NULL,
-    category_id        TEXT    NOT NULL,
-    last_product_ean   TEXT    NOT NULL,
-    num_paginator_page INTEGER NOT NULL,
-    status             TEXT    NOT NULL,
-    UNIQUE (store_id, category_id)
-)

@@ -1,8 +1,0 @@
-CREATE TABLE IF NOT EXISTS `category`
-(
-    id            VARCHAR(400)    NOT NULL,
-    store_id      INTEGER NOT NULL,
-    product_count INTEGER,
-    source        TEXT,
-    UNIQUE (id, store_id)
-)

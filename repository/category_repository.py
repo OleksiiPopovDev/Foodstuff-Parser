@@ -1,34 +1,43 @@
 from database.connector import Connector
 from dto.category_dto import CategoryDto
+from database.model.category_model import Category
+from database.model.statistic_model import Statistic
 from repository.statistic_status import StatisticStatus
 
 
 class CategoryRepository(Connector):
-    def save(self, category_dto: CategoryDto) -> None:
-        self.get_cursor().execute(
-            "INSERT INTO category (id, store_id, product_count, source) VALUES (%s, %s, %s, %s)",
-            (category_dto.id, category_dto.store_id, category_dto.product_count, category_dto.source)
+    @staticmethod
+    def save(category_dto: CategoryDto) -> None:
+        Category.create(
+            page=category_dto.page,
+            store=category_dto.store_id,
+            product_count=category_dto.product_count,
+            source=category_dto.source
         )
-        self.commit()
 
-    def list(self) -> list[CategoryDto]:
-        cursor = self.get_cursor()
-        cursor.execute(
-            """SELECT * FROM category c
-            LEFT JOIN statistic s ON c.id = s.category_id AND c.store_id = s.store_id
-            WHERE s.status = %s OR s.status IS NULL
-            ORDER BY s.status DESC""",
-            (StatisticStatus.IN_PROGRESS.value,)
-        )
-        data = cursor.fetchall()
+    @staticmethod
+    def list() -> list[CategoryDto]:
+        data = (
+            Category
+            .select()
+            .join(
+                Statistic,
+                on=((Category.page == Statistic.category) & (Category.store == Statistic.store)),
+                join_type='LEFT JOIN'
+            )
+            .where(
+                (Statistic.status == StatisticStatus.IN_PROGRESS.value) |
+                Statistic.status.is_null()
+            )
+            .order_by(Statistic.status.desc()))
 
         categories: list[CategoryDto] = []
         for category in data:
             categories.append(CategoryDto(
-                id=str(category[0]),
-                store_id=int(category[1]),
-                product_count=int(category[2]),
-                source=''
+                page=str(category.page),
+                store_id=category.store.id,
+                product_count=int(category.product_count),
+                source=category.source
             ))
 
         return categories

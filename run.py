@@ -1,6 +1,6 @@
 from dotenv import load_dotenv
 from view.view import View
-from database.migration_mysql import MigrationMySQL
+from database.migration import Migration
 from service.store_parser import StoreParser
 from service.category_parser import CategoryParser
 from service.product_parser import ProductParser
@@ -17,7 +17,7 @@ while view.selected_menu != 0:
     view.separator()
 
     if view.selected_menu == 1:
-        migration = MigrationMySQL()
+        migration = Migration()
         migration.run()
         view.separator()
 

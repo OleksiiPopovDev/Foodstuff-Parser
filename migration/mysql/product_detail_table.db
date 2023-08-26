@@ -1,9 +1,0 @@
-CREATE TABLE IF NOT EXISTS `product_detail`
-(
-    ean         VARCHAR(255) NOT NULL,
-    language    VARCHAR(255),
-    title       TEXT,
-    description TEXT,
-    source      TEXT,
-    UNIQUE (ean, language)
-)

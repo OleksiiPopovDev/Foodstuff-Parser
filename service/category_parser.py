@@ -1,8 +1,7 @@
-import sqlite3
-import mysql.connector
 import time
 import json
 import os
+from peewee import IntegrityError
 from dto.category_dto import CategoryDto
 from dto.store_dto import StoreDto
 from alive_progress import alive_bar
@@ -39,9 +38,9 @@ class CategoryParser(BaseParser):
             for category in categories:
                 try:
                     self._category_repository.save(category)
-                except (sqlite3.OperationalError, sqlite3.IntegrityError, mysql.connector.errors.IntegrityError) as message:
+                except IntegrityError as message:
                     txt: str = View.paint('{Blue}%s {Red} Error: %s{ColorOff}')
-                    print(txt % (category.id, message))
+                    print(txt % (category.page, message))
                 bar()
 
     @staticmethod
@@ -49,7 +48,7 @@ class CategoryParser(BaseParser):
         categories: list[CategoryDto] = []
         for category in resp_category_list:
             categories.append(CategoryDto(
-                id=category['id'],
+                page=category['id'],
                 store_id=store.id,
                 product_count=int(category['count']),
                 source=json.dumps(category)

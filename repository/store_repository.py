@@ -1,26 +1,23 @@
 from database.connector import Connector
 from dto.store_dto import StoreDto
+from database.model.store_model import Store
 
 
 class StoreRepository(Connector):
-    def save(self, store_dto: StoreDto) -> None:
-        self.get_cursor().execute(
-            "INSERT INTO store (id, name, source) VALUES (%s, %s, %s)",
-            (store_dto.id, store_dto.name, store_dto.source)
-        )
-        self.commit()
+    @staticmethod
+    def save(store_dto: StoreDto) -> None:
+        Store.create(id=store_dto.id, name=store_dto.name, source=store_dto.source)
 
-    def list(self) -> list[StoreDto]:
-        cursor = self.get_cursor()
-        cursor.execute("SELECT * FROM store ORDER BY id")
-        data = cursor.fetchall()
+    @staticmethod
+    def list() -> list[StoreDto]:
+        data = Store.select().order_by(Store.id)
 
         stores: list[StoreDto] = []
         for store in data:
             stores.append(StoreDto(
-                id=int(store[0]),
-                name=str(store[1]),
-                source=store[2]
+                id=store.id,
+                name=str(store.name),
+                source=store.source
             ))
 
         return stores
