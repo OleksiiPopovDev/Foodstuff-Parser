@@ -22,7 +22,7 @@ class CategoryParser(BaseParser):
         stores = self._store_repository.list()
 
         for store in stores:
-            url = '%s/stores/%s/categories' % (os.getenv('SOURCE_URL'), store.id)
+            url = os.getenv('SOURCE_CATEGORY_URL').replace('{STORE_ID}', str(store.id))
             category_list = self.send_request(url)
             categories = self.__prepare_response(category_list, store)
             self.__save_categories(store, categories)
@@ -48,6 +48,7 @@ class CategoryParser(BaseParser):
         categories: list[CategoryDto] = []
         for category in resp_category_list:
             categories.append(CategoryDto(
+                id=0,
                 page=category['id'],
                 store_id=store.id,
                 product_count=int(category['count']),

@@ -11,7 +11,8 @@ from service.base_parser import BaseParser
 
 class StoreParser(BaseParser):
     def __init__(self):
-        self._url = '%s/stores' % os.getenv('SOURCE_URL')
+        self._url = os.getenv('SOURCE_STORE_URL')
+        #self._url = '%s/stores' % os.getenv('SOURCE_URL')
         self._repository = StoreRepository()
 
     def run(self) -> None:

@@ -41,16 +41,17 @@ class ProductParser(BaseParser):
         biggest_line: int = View.count_biggest_line(category_name_list)
 
         for category in categories:
-            with alive_bar(category.product_count) as bar:
+            with (alive_bar(category.product_count) as bar):
                 page_num: int = start_num_page
                 while True:
                     title: str = mockup_str % (category.store_id, category.page)
                     spaces: int = View.get_count_spaces_for_line_up(title, biggest_line)
                     bar.title(title + ' ' * spaces)
+                    url = os.getenv('SOURCE_PRODUCT_URL')\
+                        .replace('{STORE_ID}', str(category.store_id))\
+                        .replace('{CATEGORY_PAGE}', category.page)\
+                        .replace('{PAGE_NUM}', str(page_num))
 
-                    url = '%s/stores/%d/categories/%s/products/?page=%d' % (
-                        os.getenv('SOURCE_URL'), category.store_id, category.page, page_num
-                    )
                     data = self.send_request_product(url)
 
                     product_list = data['results']
