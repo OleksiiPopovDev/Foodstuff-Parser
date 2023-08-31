@@ -3,7 +3,7 @@ from peewee import Model, SqliteDatabase, MySQLDatabase
 from dotenv import load_dotenv
 
 
-class Connector():
+class Connector:
     @staticmethod
     def get_connection():
         load_dotenv()
