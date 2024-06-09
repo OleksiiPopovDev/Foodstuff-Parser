@@ -22,7 +22,7 @@ class CategoryRepository(Connector):
             .select()
             .join(
                 Statistic,
-                on=((Category.page == Statistic.category) & (Category.store == Statistic.store)),
+                on=((Category.id == Statistic.category) & (Category.store == Statistic.store)),
                 join_type='LEFT JOIN'
             )
             .where(
