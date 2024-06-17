@@ -54,6 +54,8 @@ class ProductParser(BaseParser):
 
                     data = self.send_request_product(url)
 
+                    if 'results' not in data or data is None:
+                        break
                     product_list = data['results']
                     if len(product_list) == 0:
                         statistic_dto: StatisticDto = StatisticDto(
@@ -108,7 +110,7 @@ class ProductParser(BaseParser):
                                       product['ean'],
                                       category.store_id
                                   ))
-            # print(message_error)
+            print(message_error)
 
     @staticmethod
     def __check_nutrition_facts(product: dict, item: str) -> str:
