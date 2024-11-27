@@ -1,4 +1,4 @@
-# Foodstuff-Paser
+# Foodstuff-Parser
 Script on Python for finding and parse the energy values of Ukrainian market foodstuffs. 
 Also script founds another products of market.
 
